@@ -82,7 +82,7 @@ public class Utils {
 		}
 	}
 
-	static void request(String URL, String method, String token) throws Exception {
+	static String request(String URL, String method, String token) throws Exception {
 		URL url = new URL(URL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -100,9 +100,7 @@ public class Utils {
 		bufferedReader.close();
 		String response = stringBuffer.toString();
 		System.out.println(response);
-		if (status == HttpURLConnection.HTTP_CREATED) {
-		} else {
-		}
+		return response;
 	}
 
 	
@@ -131,12 +129,9 @@ public class Utils {
 		} else {
 		}
 	}
-
 	
-	
-	static void request(String URL, String method, String token, String USER_AGENT, String CONTENT_TYPE, String requestBody, String URLData) 
+	static void requestForceDeleteVM(String URL, String method, String token, String USER_AGENT, String CONTENT_TYPE, String requestBody, String URLData) 
 			throws Exception {
-		//String requestBody = "{\"forceDelete\": null}";
 		URL = URL + URLData + "/action";
 		URL url = new URL(URL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -160,10 +155,38 @@ public class Utils {
 		}
 		bufferedReader.close();
 		String response = stringBuffer.toString();
+		System.out.println(status);
 		System.out.println(response);
+		
 		if (status == HttpURLConnection.HTTP_CREATED) {
 		} else {
 		}
 	}
 
+	static void request(String URL, String method, String token, String URLData) 
+			throws Exception {
+		URL = URL + URLData;
+		URL url = new URL(URL);
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+		connection.setRequestMethod(method);
+		connection.setRequestProperty("X-Auth-Token", token);
+
+		int status = connection.getResponseCode();
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		StringBuffer stringBuffer = new StringBuffer();
+		String inputLine;
+		while ((inputLine = bufferedReader.readLine()) != null) {
+			stringBuffer.append(inputLine);
+		}
+		bufferedReader.close();
+		String response = stringBuffer.toString();
+		System.out.println(status);
+		System.out.println(response);
+		
+		if (status == HttpURLConnection.HTTP_CREATED) {
+		} else {
+		}
+	}
+	
 }
