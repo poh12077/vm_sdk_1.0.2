@@ -1,0 +1,111 @@
+package com.solbox.delivery.vm;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class Utils {
+
+	static String getToken(String URL, String POST, String USER_AGENT, String CONTENT_TYPE, String data)
+			throws Exception {
+		URL url = new URL(URL);
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+		connection.setRequestMethod(POST);
+		connection.setRequestProperty("User-Agent", USER_AGENT);
+		connection.setRequestProperty("Content-Type", CONTENT_TYPE);
+		connection.setDoOutput(true);
+
+		DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+		outputStream.writeBytes(data);
+		outputStream.flush();
+		outputStream.close();
+
+		int status = connection.getResponseCode();
+
+		if (status == HttpURLConnection.HTTP_CREATED) {
+			String token = connection.getHeaderField("X-Subject-Token");
+			return token;
+		} else {
+			return "";
+		}
+	}
+	
+
+	static String getSSHKeyPair(String URL, String POST, String USER_AGENT, String CONTENT_TYPE, String data)
+			throws Exception {
+		URL url = new URL(URL);
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+		connection.setRequestMethod(POST);
+		connection.setRequestProperty("User-Agent", USER_AGENT);
+		connection.setRequestProperty("Content-Type", CONTENT_TYPE);
+		connection.setDoOutput(true);
+
+		DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+		outputStream.writeBytes(data);
+		outputStream.flush();
+		outputStream.close();
+
+		int status = connection.getResponseCode();
+
+		if (status == HttpURLConnection.HTTP_CREATED) {
+			String token = connection.getHeaderField("X-Subject-Token");
+			return token;
+		} else {
+			return "";
+		}
+	}
+	
+
+	static void getVM(String URL, String POST, String token, String USER_AGENT, String CONTENT_TYPE, String data) throws Exception {		
+		URL url = new URL(URL);
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+		connection.setRequestMethod(POST);
+		connection.setRequestProperty("User-Agent", USER_AGENT);
+		connection.setRequestProperty("Content-Type", CONTENT_TYPE);
+		connection.setRequestProperty("X-Auth-Token", token);
+		
+		connection.setDoOutput(true);
+
+		DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+		outputStream.writeBytes(data);
+		outputStream.flush();
+		outputStream.close();
+
+		int status = connection.getResponseCode();
+
+		if (status == HttpURLConnection.HTTP_CREATED) {
+		} else {
+		}
+	}
+	
+	static void forceDeleteVM(String URL, String vmId, String POST, String token, String USER_AGENT, String CONTENT_TYPE) throws Exception {		
+		String data = "{\"forceDelete\": null}";
+		URL = URL + vmId + "/action";
+		URL url = new URL(URL);
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+		connection.setRequestMethod(POST);
+		connection.setRequestProperty("User-Agent", USER_AGENT);
+		connection.setRequestProperty("Content-Type", CONTENT_TYPE);
+		connection.setRequestProperty("X-Auth-Token", token);
+		
+		connection.setDoOutput(true);
+
+		DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
+		outputStream.writeBytes(data);
+		outputStream.flush();
+		outputStream.close();
+
+		int status = connection.getResponseCode();
+
+		if (status == HttpURLConnection.HTTP_CREATED) {
+		} else {
+		}
+	}
+	
+	
+}

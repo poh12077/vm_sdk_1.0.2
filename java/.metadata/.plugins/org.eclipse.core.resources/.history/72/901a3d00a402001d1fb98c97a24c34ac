@@ -1,0 +1,36 @@
+package com.solbox.delivery.vm;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class App {
+	private static final String getTokenURL = "https://api.ucloudbiz.olleh.com/d1/identity/auth/tokens";
+	private static final String getVMURL = "https://api.ucloudbiz.olleh.com/d1/server/servers";
+	private static final String forceDeleteVMURL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
+	
+	private static final String GET = "GET";
+	private static final String POST = "POST";
+	private static final String USER_AGENT = "Mozilla/5.0";
+	private static final String CONTENT_TYPE = "application/json";
+	private static String requestBody;
+	private static final String VMRequestData = "{	\"server\": {		\"name\": \"t1\",		\"key_name\": \"ssh_yh\",		\"flavorRef\": \"61c68bc1-3a56-4827-9fd1-6a7929362bf6\",		\"availability_zone\": \"DX-M1\",		\"networks\": [			{				\"uuid\": \"71655962-3e67-42d6-a17d-6ab61a435dfe\"			}		],		\"block_device_mapping_v2\": [			{				\"destination_type\": \"volume\",				\"boot_index\": \"0\",				\"source_type\": \"image\",				\"volume_size\": 50,				\"uuid\": \"67b704a8-c863-4a61-93cf-13d47099bf10\"			}		]	}}";
+	
+	public static void main(String[] args) {
+		try {
+			requestBody= RequestBody.token();
+			String token = Utils.getToken(getTokenURL, POST, USER_AGENT, CONTENT_TYPE, requestBody);
+
+			requestBody= RequestBody.VM();
+			Utils.getVM(getVMURL, POST, token, USER_AGENT, CONTENT_TYPE, VMRequestData);
+			//String vmId = "4b2792c0-0a16-4ba8-b513-769b31c35aab";
+			//Utils.forceDeleteVM(forceDeleteVMURL, vmId, POST, token, USER_AGENT, CONTENT_TYPE);
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+}
