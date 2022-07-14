@@ -1,0 +1,37 @@
+package com.solbox.delivery.vm;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Facilities {
+
+	static void deleteAllVM(String list, String token) throws Exception {
+		
+		JSONObject jsonObject = new JSONObject(list);
+		JSONArray servers = jsonObject.getJSONArray("servers");
+		
+		for(int i=0; i<servers.length();i++ ) {
+			JSONObject VM = servers.getJSONObject(i);
+			String VM_ID = VM.getString("id");
+			Utils.request(App.forceDeleteVM_URL, App.POST, token, App.USER_AGENT, App.CONTENT_TYPE, RequestBody.forceDeleteVM(), VM_ID);
+		}			
+	}
+	
+static void closeAllFirewall(String list, String token) throws Exception {
+		
+		JSONObject jsonObject = new JSONObject(list);
+		JSONObject nc_listfirewallrulesresponse = jsonObject.getJSONObject("nc_listfirewallrulesresponse");
+		
+		int t=1;
+		//JSONArray servers = jsonObject.getJSONArray("servers");
+		/*
+		for(int i=0; i<servers.length();i++ ) {
+			JSONObject VM = servers.getJSONObject(i);
+			String VM_ID = VM.getString("id");
+			Utils.request(App.forceDeleteVM_URL, App.POST, token, App.USER_AGENT, App.CONTENT_TYPE, RequestBody.forceDeleteVM(), VM_ID);
+		}
+		*/			
+	}
+
+}

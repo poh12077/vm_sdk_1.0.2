@@ -1,0 +1,19 @@
+package com.solbox.delivery.vm;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class JsonParser {
+
+	static void parseVMList(String jsonString) {
+		
+		JSONObject jsonObject = new JSONObject(jsonString);
+		JSONArray jsonArray = jsonObject.getJSONArray("servers");
+		
+		for(int i=0; i<jsonArray.length();i++ ) {
+			JSONObject servers = jsonArray.getJSONObject(i);
+			String id = servers.getString("id");
+		}			
+	}
+}
