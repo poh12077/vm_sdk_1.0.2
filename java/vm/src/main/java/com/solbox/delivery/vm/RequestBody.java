@@ -87,7 +87,6 @@ public class RequestBody {
 	
 	static String openFirewall(String startPort, String endPort, String staticNAT_ID, String sourceNetworkID, 
 			String destinationNetworkAddress, String protocol, String destinationNetworkID) throws JSONException {
-		
 		JSONObject finalJsonObject = new JSONObject();
 		finalJsonObject.put("startport", startPort);
 		finalJsonObject.put("endport", endPort);
@@ -97,19 +96,15 @@ public class RequestBody {
 		finalJsonObject.put("dstip", destinationNetworkAddress);
 		finalJsonObject.put("protocol", protocol);
 		finalJsonObject.put("dstnetworkid", destinationNetworkID);
-		
 		return finalJsonObject.toString();
 	}
 
 	static String connectVMAndVolume(String volumeId) throws JSONException {
 		JSONObject finalJsonObject = new JSONObject();
 		JSONObject volumeAttachment = new JSONObject();
-
 		volumeAttachment.put("volumeId", volumeId);
 		volumeAttachment.put("device", "/dev/vdb");
-		
 		finalJsonObject.put("volumeAttachment", volumeAttachment);
-		
 		return finalJsonObject.toString();
 	}
 	

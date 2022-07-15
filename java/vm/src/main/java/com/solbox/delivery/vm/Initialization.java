@@ -14,7 +14,7 @@ public class Initialization {
 		for (int i = 0; i < servers.length(); i++) {
 			JSONObject VM = servers.getJSONObject(i);
 			String VM_ID = VM.getString("id");
-			Utils.requestForceDeleteVM(App.forceDeleteVM_URL, App.POST, token, App.USER_AGENT, App.CONTENT_TYPE,
+			RestAPI.requestForceDeleteVM(App.forceDeleteVM_URL, App.POST, token, App.USER_AGENT, App.CONTENT_TYPE,
 					RequestBody.forceDeleteVM(), VM_ID);
 		}
 	}
@@ -29,9 +29,9 @@ public class Initialization {
 			JSONObject jsonObject0 = firewallrules.getJSONObject(i);
 			JSONArray acls = jsonObject0.getJSONArray("acls");
 			for (int j = 0; j < acls.length(); j++) {
-				JSONObject firewalls = acls.getJSONObject(j);
-				int firewall_ID = firewalls.getInt("id");
-				Utils.request(App.closeFirewall_URL, App.DELETE, token, Integer.toString(firewall_ID));
+				JSONObject firewall = acls.getJSONObject(j);
+				int firewall_ID = firewall.getInt("id");
+				RestAPI.request(App.closeFirewall_URL, App.DELETE, token, Integer.toString(firewall_ID));
 			}
 		}
 	}
@@ -45,7 +45,7 @@ public class Initialization {
 		for (int i = 0; i < publicips.length(); i++) {
 			JSONObject IP = publicips.getJSONObject(i);
 			String id = IP.getString("id");
-			Utils.request(App.deleteIP_URL, App.DELETE, token, id);
+			RestAPI.request(App.deleteIP_URL, App.DELETE, token, id);
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class Initialization {
 		for (int i = 0; i < staticnats.length(); i++) {
 			JSONObject staticNAT = staticnats.getJSONObject(i);
 			String id = staticNAT.getString("id");
-			Utils.request(App.DeleteStaticNAT_URL, App.DELETE, token, id);
+			RestAPI.request(App.DeleteStaticNAT_URL, App.DELETE, token, id);
 		}
 	}
 	

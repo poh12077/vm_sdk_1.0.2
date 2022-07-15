@@ -1,0 +1,17 @@
+package com.solbox.delivery.vm;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+public class Utils {
+
+	static String statusCodeParser(String result) {
+		JSONObject jsonResult = new JSONObject(result);
+		
+		return "";
+		
+	}
+	
+}
