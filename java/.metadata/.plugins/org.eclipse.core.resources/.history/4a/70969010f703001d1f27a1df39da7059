@@ -22,7 +22,7 @@ public class App {
 	 static final String VMList_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/detail";
 	 static final String staticNATList_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat";
 	 static final String IPList_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
-	 static final String DeleteStaticNAT_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat/";
+	 static final String DeletestaticNAT_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat/";
 			
 	 static final String GET = "GET";
 	 static final String DELETE = "DELETE";

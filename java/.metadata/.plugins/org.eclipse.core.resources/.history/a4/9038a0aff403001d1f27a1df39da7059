@@ -46,20 +46,9 @@ public class Initialization {
 			JSONObject IP = publicips.getJSONObject(i);
 			String id = IP.getString("id");
 			Utils.request(App.deleteIP_URL, App.DELETE, token, id);
+			}
 		}
 	}
-	
-	static void deleteAllStaticNAT(String list, String token) throws Exception {
 
-		JSONObject fianlJsonObject = new JSONObject(list);
-		JSONObject nc_liststaticnatsresponse = fianlJsonObject.getJSONObject("nc_liststaticnatsresponse");
-		JSONArray staticnats = nc_liststaticnatsresponse.getJSONArray("staticnats");
-
-		for (int i = 0; i < staticnats.length(); i++) {
-			JSONObject staticNAT = staticnats.getJSONObject(i);
-			String id = staticNAT.getString("id");
-			Utils.request(App.DeleteStaticNAT_URL, App.DELETE, token, id);
-		}
-	}
 	
 }

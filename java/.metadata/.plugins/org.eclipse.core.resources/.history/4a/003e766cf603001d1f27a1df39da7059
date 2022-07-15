@@ -22,8 +22,7 @@ public class App {
 	 static final String VMList_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/detail";
 	 static final String staticNATList_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat";
 	 static final String IPList_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
-	 static final String DeleteStaticNAT_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat/";
-			
+		
 	 static final String GET = "GET";
 	 static final String DELETE = "DELETE";
 	 static final String POST = "POST";
@@ -38,10 +37,6 @@ public class App {
 
 			//requestBody = RequestBody.getVM("solrtmp00","59a2e83b-a879-4528-958e-7c46e241040b");
 			//Utils.request(getVM_URL, POST, token, USER_AGENT, CONTENT_TYPE, requestBody);
-			
-			list = Utils.request(staticNATList_URL, GET, token);
-			Initialization.deleteAllStaticNAT(list, token);
-		    
 			
 			list = Utils.request(IPList_URL, GET, token);
 			Initialization.deleteAllIP(list, token);

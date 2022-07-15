@@ -52,13 +52,13 @@ public class Initialization {
 	static void deleteAllStaticNAT(String list, String token) throws Exception {
 
 		JSONObject fianlJsonObject = new JSONObject(list);
-		JSONObject nc_liststaticnatsresponse = fianlJsonObject.getJSONObject("nc_liststaticnatsresponse");
-		JSONArray staticnats = nc_liststaticnatsresponse.getJSONArray("staticnats");
+		JSONObject nc_listentpublicipsresponse = fianlJsonObject.getJSONObject("nc_listentpublicipsresponse");
+		JSONArray publicips = nc_listentpublicipsresponse.getJSONArray("publicips");
 
-		for (int i = 0; i < staticnats.length(); i++) {
-			JSONObject staticNAT = staticnats.getJSONObject(i);
-			String id = staticNAT.getString("id");
-			Utils.request(App.DeleteStaticNAT_URL, App.DELETE, token, id);
+		for (int i = 0; i < publicips.length(); i++) {
+			JSONObject IP = publicips.getJSONObject(i);
+			String id = IP.getString("id");
+			Utils.request(App.deleteIP_URL, App.DELETE, token, id);
 		}
 	}
 	
