@@ -1,0 +1,113 @@
+package com.solbox.delivery.vm;
+
+public class KTCloudOpenAPI {
+	
+	static final String getVM_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers";
+	static final String forceDeleteVM_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
+	static final String VMList_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/detail";
+	static final String VMDetail_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
+	
+	static final String getVolume_URL = "https://api.ucloudbiz.olleh.com/d1/volume/c3d6ced17b1d45d98af60cbeff8f4bbd/volumes";
+	static final String connectVMAndVolume_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
+	
+	static final String getIP_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
+	static final String deleteIP_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress/";
+	static final String IPList_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
+	
+	static final String setStaticNAT_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat";
+	static final String staticNATList_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat";
+	static final String DeleteStaticNAT_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat/";
+	
+	static final String openFirewall_URL = "https://api.ucloudbiz.olleh.com/d1/nc/Firewall";
+	static final String firewall_List_URL = "https://api.ucloudbiz.olleh.com/d1/nc/Firewall";
+	static final String closeFirewall_URL = "https://api.ucloudbiz.olleh.com/d1/nc/Firewall/";
+	
+	static final String getToken_URL = "https://api.ucloudbiz.olleh.com/d1/identity/auth/tokens";
+	static final String jobID_URL = "https://api.ucloudbiz.olleh.com/d1/nc/Etc?command=queryAsyncJob&jobid=";
+
+	static final String GET = "GET";
+	static final String DELETE = "DELETE";
+	static final String POST = "POST";
+	static final String USER_AGENT = "Mozilla/5.0";
+	static final String CONTENT_TYPE = "application/json";
+
+	static void createServer(String serverName, String volumeName) throws Exception {
+
+		String requestBody;
+		String result;
+		String response;
+		result = RestAPI.request(getToken_URL, POST, RequestBody.getToken());
+		String token = Utils.statusCodeParser(result);
+
+		String VMimageID = "03a6328b-76c8-4d15-8e3f-d5cae5cf1156";
+		String specs = "61c68bc1-3a56-4827-9fd1-6a7929362bf6";
+		requestBody = RequestBody.getVM(serverName, VMimageID, specs);
+		result = RestAPI.request(getVM_URL, POST, token, requestBody);
+		response = Utils.statusCodeParser(result);
+		String VM_ID = Utils.VMCreateResponseParser(response);
+	  
+		String volumeImageID = "556aacd2-de16-47fc-b230-3db3a55be50d";
+		requestBody = RequestBody.getVolume(volumeName, volumeImageID);
+		result = RestAPI.request(getVolume_URL, POST, token, requestBody);
+		response = Utils.statusCodeParser(result);
+		String volumeID = Utils.volumeCreateResponseParser(response);
+
+		result = RestAPI.request(getIP_URL, POST, token, "");
+		response = Utils.statusCodeParser(result);
+		String jobID = Utils.IPCreateResponseParser(response);
+
+		result = RestAPI.request(jobID_URL+jobID, GET, token, "");
+		response = Utils.statusCodeParser(result);
+		String publicIP_ID=Utils.jobIDLookupResponseParser(response);
+		
+		result = RestAPI.request(VMDetail_URL+VM_ID, GET, token, "");
+		response = Utils.statusCodeParser(result);
+		String privateIP = Utils.VMDetailResponseParser(response);
+		
+		String networkID = "71655962-3e67-42d6-a17d-6ab61a435dfe";
+		requestBody = RequestBody.setStaticNat(privateIP, networkID, publicIP_ID);
+		result = RestAPI.request(setStaticNAT_URL, POST, token, requestBody);
+		response = Utils.statusCodeParser(result);
+		
+		
+		// result = RestAPI.request(IPList_URL, GET, token);
+		// response = Utils.statusCodeParser(result);
+
+		requestBody = RequestBody.connectVMAndVolume(volumeID);
+		result = RestAPI.request(connectVMAndVolume_URL+VM_ID+"/os-volume_attachments", POST, token, requestBody);
+		response = Utils.statusCodeParser(result);
+
+	}
+
+	static void deleteServer() throws Exception {
+		// VM delete logic should be here
+	}
+
+	static void init() throws Exception {
+		String result;
+		String response;
+		result = RestAPI.request(getToken_URL, POST, RequestBody.getToken());
+		String token = Utils.statusCodeParser(result);
+
+		result = RestAPI.request(firewall_List_URL, GET, token, "");
+		response = Utils.statusCodeParser(result);  
+		Initialization.closeAllFirewall(response, token);
+		
+		result = RestAPI.request(staticNATList_URL, GET, token, "");
+		response = Utils.statusCodeParser(result);  
+		Initialization.deleteAllStaticNAT(response, token);
+		  
+		result = RestAPI.request(IPList_URL, GET, token, "");
+		response = Utils.statusCodeParser(result); 
+		Initialization.deleteAllIP(response, token);
+		 
+		result = RestAPI.request(VMList_URL, GET, token, "");
+		response = Utils.statusCodeParser(result);
+		Initialization.deleteAllVM(response, token);
+		
+	}
+
+	static void lookup() throws Exception {
+	}
+
+}

@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RequestBody {
-	static String getVM(String name, String imageID ) throws JSONException {
+	static String getVM(String name, String imageID, String specs) throws JSONException {
 		JSONObject finalJsonObject = new JSONObject();
 		JSONObject server = new JSONObject();
 		JSONObject networks = new JSONObject();
@@ -15,7 +15,7 @@ public class RequestBody {
 
 		server.put("name", name);
 		server.put("key_name", "ssh_yh");
-		server.put("flavorRef", "61c68bc1-3a56-4827-9fd1-6a7929362bf6");
+		server.put("flavorRef", specs);
 		server.put("availability_zone", "DX-M1");
 		networks.put("uuid", "71655962-3e67-42d6-a17d-6ab61a435dfe");
 		jsonArray0.put(networks);
@@ -109,7 +109,6 @@ public class RequestBody {
 	}
 	
 	static String forceDeleteVM() throws JSONException {
-		
 		return "{\"forceDelete\": null}";
 	}
 	

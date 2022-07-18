@@ -14,11 +14,11 @@ public class Initialization {
 		for (int i = 0; i < servers.length(); i++) {
 			JSONObject VM = servers.getJSONObject(i);
 			String VM_ID = VM.getString("id");
-			RestAPI.requestForceDeleteVM(App.forceDeleteVM_URL, App.POST, token, App.USER_AGENT, App.CONTENT_TYPE,
-					RequestBody.forceDeleteVM(), VM_ID);
+			String requestBody=RequestBody.forceDeleteVM();
+			RestAPI.request(KTCloudOpenAPI.forceDeleteVM_URL+VM_ID+"/action" , KTCloudOpenAPI.POST, token, requestBody );
 		}
 	}
-
+	
 	static void closeAllFirewall(String list, String token) throws Exception {
 
 		JSONObject fianlJsonObject = new JSONObject(list);
@@ -31,7 +31,8 @@ public class Initialization {
 			for (int j = 0; j < acls.length(); j++) {
 				JSONObject firewall = acls.getJSONObject(j);
 				int firewall_ID = firewall.getInt("id");
-				RestAPI.request(App.closeFirewall_URL, App.DELETE, token, Integer.toString(firewall_ID));
+				String firewall_id =Integer.toString(firewall_ID);
+				RestAPI.request(KTCloudOpenAPI.closeFirewall_URL+firewall_id, KTCloudOpenAPI.DELETE, token, "");
 			}
 		}
 	}
@@ -45,7 +46,7 @@ public class Initialization {
 		for (int i = 0; i < publicips.length(); i++) {
 			JSONObject IP = publicips.getJSONObject(i);
 			String id = IP.getString("id");
-			RestAPI.request(App.deleteIP_URL, App.DELETE, token, id);
+			RestAPI.request(KTCloudOpenAPI.deleteIP_URL+id, KTCloudOpenAPI.DELETE, token,"");
 		}
 	}
 	
@@ -58,7 +59,7 @@ public class Initialization {
 		for (int i = 0; i < staticnats.length(); i++) {
 			JSONObject staticNAT = staticnats.getJSONObject(i);
 			String id = staticNAT.getString("id");
-			RestAPI.request(App.DeleteStaticNAT_URL, App.DELETE, token, id);
+			RestAPI.request(KTCloudOpenAPI.DeleteStaticNAT_URL+id, KTCloudOpenAPI.DELETE, token, "");
 		}
 	}
 	

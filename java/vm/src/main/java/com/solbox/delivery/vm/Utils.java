@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import java.net.HttpURLConnection;
 
 public class Utils {
-
+	
 	static String statusCodeParser(String result) throws JSONException {
 		JSONObject jsonResult = new JSONObject(result);
 		if( jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_CREATED 
@@ -28,11 +28,40 @@ public class Utils {
 		return ID;
 	}
 	
+	static String VMDetailResponseParser(String response) throws JSONException {
+		JSONObject fianlJsonObject = new JSONObject(response);
+		JSONObject server = fianlJsonObject.getJSONObject("server");
+		JSONObject addresses = server.getJSONObject("addresses");
+		JSONArray Private = addresses.getJSONArray("Private");
+		String privateIP="";
+		for(int i=0;i<Private.length();i++) {
+			JSONObject jsonObject = Private.getJSONObject(i);
+			privateIP = jsonObject.getString("addr");
+		}
+		return privateIP;
+	}
+	
+	
 	static String volumeCreateResponseParser(String response) throws JSONException {
 		JSONObject fianlJsonObject = new JSONObject(response);
 		JSONObject volume = fianlJsonObject.getJSONObject("volume");
 		String ID = volume.getString("id");
 		return ID;
+	}
+	
+	static String IPCreateResponseParser(String response) throws JSONException {
+		JSONObject fianlJsonObject = new JSONObject(response);
+		JSONObject nc_associateentpublicipresponse = fianlJsonObject.getJSONObject("nc_associateentpublicipresponse");
+		String job_id = nc_associateentpublicipresponse.getString("job_id");
+		return job_id;
+	}
+	
+	static String jobIDLookupResponseParser(String response) throws JSONException {
+		JSONObject fianlJsonObject = new JSONObject(response);
+		JSONObject nc_associateentpublicipresponse = fianlJsonObject.getJSONObject("nc_queryasyncjobresultresponse");
+		JSONObject result = nc_associateentpublicipresponse.getJSONObject("result");
+		String IP_id = result.getString("id");
+		return IP_id;
 	}
 	
 }

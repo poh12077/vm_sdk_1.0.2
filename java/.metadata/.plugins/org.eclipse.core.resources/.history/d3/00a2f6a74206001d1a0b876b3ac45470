@@ -1,0 +1,78 @@
+package com.solbox.delivery.vm;
+
+public class KTCloudOpenAPI {
+
+	 static final String getToken_URL = "https://api.ucloudbiz.olleh.com/d1/identity/auth/tokens";
+	 static final String getVM_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers";
+	 static final String forceDeleteVM_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
+	 static final String getVolume_URL = "https://api.ucloudbiz.olleh.com/d1/volume/c3d6ced17b1d45d98af60cbeff8f4bbd/volumes";
+	 static final String connectVMAndVolume_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
+	 static final String getIP_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
+	 static final String deleteIP_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress/";
+	 static final String setStaticNAT_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat";
+	 static final String openFirewall_URL = "https://api.ucloudbiz.olleh.com/d1/nc/Firewall";
+	 static final String firewall_List_URL = "https://api.ucloudbiz.olleh.com/d1/nc/Firewall";
+	 static final String closeFirewall_URL = "https://api.ucloudbiz.olleh.com/d1/nc/Firewall/";
+	 static final String VMList_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/detail";
+	 static final String staticNATList_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat";
+	 static final String IPList_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
+	 static final String DeleteStaticNAT_URL = "https://api.ucloudbiz.olleh.com/d1/nc/StaticNat/";
+			
+	 static final String GET = "GET";
+	 static final String DELETE = "DELETE";
+	 static final String POST = "POST";
+	 static final String USER_AGENT = "Mozilla/5.0";
+	 static final String CONTENT_TYPE = "application/json";
+	 
+	static void createServer(String serverName, String volumeName ) throws Exception {
+		
+		String requestBody;
+		String list;
+		String result;
+		String response;
+		result = RestAPI.getToken(getToken_URL, POST, USER_AGENT, CONTENT_TYPE, RequestBody.getToken());
+		String token = Utils.statusCodeParser(result);
+		
+		/*
+		 * requestBody =
+		 * RequestBody.getVM("serverName","f2905719-e1b8-4f0e-9c9d-8260184dda9f");
+		 * result = RestAPI.request(getVM_URL, POST, token, USER_AGENT, CONTENT_TYPE,
+		 * requestBody); response = Utils.statusCodeParser(result); String VM_ID =
+		 * Utils.VMCreateResponseParser(response);
+		 * 
+		 * 
+		 * requestBody = RequestBody.getVolume("volumeName",
+		 * "69dfe9a7-75ee-41aa-ac3a-ab054006d49d"); result =
+		 * RestAPI.request(getVolume_URL, POST, token, USER_AGENT, CONTENT_TYPE,
+		 * requestBody); response = Utils.statusCodeParser(result); String volumeID =
+		 * Utils.volumeCreateResponseParser(response);
+		 */
+		
+		//result = RestAPI.request(getIP_URL, POST, token);
+		//response = Utils.statusCodeParser(result);
+		
+		result = RestAPI.request(IPList_URL, GET, token);
+		response = Utils.statusCodeParser(result);
+		
+		/*
+		 * requestBody= RequestBody.connectVMAndVolume(volumeID); result =
+		 * RestAPI.request(connectVMAndVolume_URL+VM_ID+"/os-volume_attachments", POST,
+		 * token, USER_AGENT, CONTENT_TYPE, requestBody); response =
+		 * Utils.statusCodeParser(result);
+		 */ 
+	
+	}
+	
+	static void deleteServer() throws Exception {
+		//VM delete logic should be here
+	}
+	
+	static void init() throws Exception {
+		//VM delete logic should be here
+	}
+	
+	static void lookup() throws Exception {
+		//VM delete logic should be here
+	}
+	
+}
