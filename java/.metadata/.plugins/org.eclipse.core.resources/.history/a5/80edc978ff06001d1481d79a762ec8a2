@@ -64,17 +64,4 @@ public class Utils {
 		return IP_id;
 	}
 	
-	static String staticNATSettingResponseParser(String response) throws JSONException {
-		JSONObject fianlJsonObject = new JSONObject(response);
-		JSONObject nc_enablestaticnatresponse = fianlJsonObject.getJSONObject("nc_enablestaticnatresponse");
-		String staticNAT_ID="";
-		if(nc_enablestaticnatresponse.getBoolean("success")==true) {
-			staticNAT_ID = nc_enablestaticnatresponse.getString("id");
-			return staticNAT_ID;
-		}else {
-			return staticNAT_ID;
-		}
-	}
-	
-	
 }
