@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 
 public class RestAPI {
 
-	//token
 	static String request(String URL, String method, String requestBody) throws Exception {
 		URL url = new URL(URL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -43,7 +42,6 @@ public class RestAPI {
 		return result.toString();
 	}
 
-	//general
 	static String request(String URL, String method, String token, String requestBody) throws Exception {
 		URL url = new URL(URL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -59,12 +57,6 @@ public class RestAPI {
 			outputStream.close();
 		}
 		int statusCode = connection.getResponseCode();
-		if(statusCode == 409) {
-			JSONObject result = new JSONObject();
-			result.put("statusCode", statusCode);
-			result.put("response", "");
-			return result.toString();
-		}
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		StringBuffer stringBuffer = new StringBuffer();
 		String inputLine;

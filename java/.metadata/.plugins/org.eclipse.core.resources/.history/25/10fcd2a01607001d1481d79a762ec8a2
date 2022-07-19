@@ -54,18 +54,9 @@ public class KTCloudOpenAPI {
 		response = Utils.statusCodeParser(result);
 		String volumeID = Utils.volumeCreateResponseParser(response);
 
-		// get public ip
-		result = RestAPI.request(getIP_URL, POST, token, "");
-		response = Utils.statusCodeParser(result);
-		String jobID = Utils.IPCreateResponseParser(response);
-
-		result = RestAPI.request(jobID_URL + jobID, GET, token, "");
-		response = Utils.statusCodeParser(result);
-		String publicIP_ID = Utils.jobIDLookupResponseParser(response);
-
 		// connect vm and volume
-		int count = 0;
 		while (true) {
+			int count=0;
 			requestBody = RequestBody.connectVMAndVolume(volumeID);
 			result = RestAPI.request(connectVMAndVolume_URL + VM_ID + "/os-volume_attachments", POST, token,
 					requestBody);
@@ -78,15 +69,14 @@ public class KTCloudOpenAPI {
 			System.out.println(count);
 		}
 
-		/*
-		 * // get public ip result = RestAPI.request(getIP_URL, POST, token, "");
-		 * response = Utils.statusCodeParser(result); String jobID =
-		 * Utils.IPCreateResponseParser(response);
-		 * 
-		 * result = RestAPI.request(jobID_URL + jobID, GET, token, ""); response =
-		 * Utils.statusCodeParser(result); String publicIP_ID =
-		 * Utils.jobIDLookupResponseParser(response);
-		 */
+		// get public ip
+		result = RestAPI.request(getIP_URL, POST, token, "");
+		response = Utils.statusCodeParser(result);
+		String jobID = Utils.IPCreateResponseParser(response);
+
+		result = RestAPI.request(jobID_URL + jobID, GET, token, "");
+		response = Utils.statusCodeParser(result);
+		String publicIP_ID = Utils.jobIDLookupResponseParser(response);
 
 		// look up vm ip
 		result = RestAPI.request(VMDetail_URL + VM_ID, GET, token, "");
@@ -105,7 +95,13 @@ public class KTCloudOpenAPI {
 		result = RestAPI.request(openFirewall_URL, POST, token, requestBody);
 		response = Utils.statusCodeParser(result);
 
-		System.out.println("server creation is done");
+		// connect vm and volume
+		/*
+		 * requestBody = RequestBody.connectVMAndVolume(volumeID); result =
+		 * RestAPI.request(connectVMAndVolume_URL + VM_ID + "/os-volume_attachments",
+		 * POST, token, requestBody); response = Utils.statusCodeParser(result);
+		 */
+
 		// result = RestAPI.request(IPList_URL, GET, token);
 		// response = Utils.statusCodeParser(result);
 
@@ -141,7 +137,6 @@ public class KTCloudOpenAPI {
 		response = Utils.statusCodeParser(result);
 		Initialization.deleteAllVM(response, token);
 
-		System.out.println("initialization is done");
 	}
 
 	static void lookup() throws Exception {

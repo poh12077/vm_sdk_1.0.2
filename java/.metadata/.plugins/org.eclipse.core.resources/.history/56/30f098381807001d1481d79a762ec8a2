@@ -105,7 +105,6 @@ public class KTCloudOpenAPI {
 		result = RestAPI.request(openFirewall_URL, POST, token, requestBody);
 		response = Utils.statusCodeParser(result);
 
-		System.out.println("server creation is done");
 		// result = RestAPI.request(IPList_URL, GET, token);
 		// response = Utils.statusCodeParser(result);
 
@@ -141,7 +140,6 @@ public class KTCloudOpenAPI {
 		response = Utils.statusCodeParser(result);
 		Initialization.deleteAllVM(response, token);
 
-		System.out.println("initialization is done");
 	}
 
 	static void lookup() throws Exception {

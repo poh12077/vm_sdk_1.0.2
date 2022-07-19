@@ -1333,3 +1333,40 @@ java.net.URISyntaxException: Illegal character in path at index 20: file:/C:/Use
 2022-07-19 10:40:34,671 [Worker-63: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
 2022-07-19 11:07:03,004 [Worker-75: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2022-07-19 11:07:03,004 [Worker-75: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 11:07:03,006 [Worker-75: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 11:07:03,006 [Worker-75: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
+2022-07-19 11:42:45,324 [Worker-80: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 11:42:45,325 [Worker-80: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 11:42:45,327 [Worker-80: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 11:42:45,328 [Worker-80: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
+2022-07-19 11:44:15,867 [Worker-77: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 11:44:15,868 [Worker-77: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 11:44:15,869 [Worker-77: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 11:44:15,869 [Worker-77: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
+2022-07-19 12:52:13,235 [Worker-99: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 12:52:13,236 [Worker-99: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 12:52:13,238 [Worker-99: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 12:52:13,239 [Worker-99: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
+2022-07-19 12:54:50,982 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 12:54:50,982 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 12:54:50,983 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 12:54:50,984 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
+2022-07-19 12:55:28,757 [Worker-82: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 12:55:28,758 [Worker-82: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 12:55:28,759 [Worker-82: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 12:55:28,759 [Worker-82: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
+2022-07-19 12:57:23,509 [Worker-104: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 12:57:23,509 [Worker-104: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 12:57:23,511 [Worker-104: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 12:57:23,511 [Worker-104: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
+2022-07-19 13:04:29,084 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 13:04:29,084 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 13:04:29,085 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 13:04:29,085 [Worker-100: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
+2022-07-19 13:04:50,957 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 13:04:50,957 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 13:04:50,959 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 13:04:50,959 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\test\resources
+2022-07-19 13:06:52,903 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2022-07-19 13:06:52,903 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\young hwa park\Desktop\yhp\source\vm_sdk_1.0.2\java\vm\src\main\resources
+2022-07-19 13:06:52,904 [Worker-102: Launching App] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
