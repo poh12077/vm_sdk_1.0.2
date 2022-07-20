@@ -34,15 +34,18 @@ public class KTCloudOpenAPI {
 		String requestBody;
 		String result;
 		String response;
-
+		String VMImage_complete1="03a6328b-76c8-4d15-8e3f-d5cae5cf1156";
+		String VMImage_nginx="fab16e16-5d53-4e00-892f-bec4b10079bb";
+		
 		// token
 		result = RestAPI.request(getToken_URL, POST, RequestBody.getToken());
 		String token = Utils.statusCodeParser(result);
 
 		// get vm
-		String VMimageID = "03a6328b-76c8-4d15-8e3f-d5cae5cf1156";
+		String VMimageID = VMImage_complete1;
 		String specs = "61c68bc1-3a56-4827-9fd1-6a7929362bf6";
 		requestBody = RequestBody.getVM(serverName, VMimageID, specs);
+		RestAPI.post(getVM_URL, token, requestBody);
 		result = RestAPI.request(getVM_URL, POST, token, requestBody);
 		response = Utils.statusCodeParser(result);
 		String VM_ID = Utils.VMCreateResponseParser(response);
@@ -77,16 +80,7 @@ public class KTCloudOpenAPI {
 			count++;
 			System.out.println(count);
 		}
-
-		/*
-		 * // get public ip result = RestAPI.request(getIP_URL, POST, token, "");
-		 * response = Utils.statusCodeParser(result); String jobID =
-		 * Utils.IPCreateResponseParser(response);
-		 * 
-		 * result = RestAPI.request(jobID_URL + jobID, GET, token, ""); response =
-		 * Utils.statusCodeParser(result); String publicIP_ID =
-		 * Utils.jobIDLookupResponseParser(response);
-		 */
+		//System.out.println(count);
 
 		// look up vm ip
 		result = RestAPI.request(VMDetail_URL + VM_ID, GET, token, "");
