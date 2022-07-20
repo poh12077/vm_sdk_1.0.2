@@ -45,8 +45,8 @@ public class KTCloudOpenAPI {
 		String VMimageID = VMImage_complete1;
 		String specs = "61c68bc1-3a56-4827-9fd1-6a7929362bf6";
 		requestBody = RequestBody.getVM(serverName, VMimageID, specs);
-		//result = RestAPI.request(getVM_URL, POST, token, requestBody);
-		result = RestAPI.post(getVM_URL, token, requestBody);
+		RestAPI.post(getVM_URL, token, requestBody);
+		result = RestAPI.request(getVM_URL, POST, token, requestBody);
 		response = Utils.statusCodeParser(result);
 		String VM_ID = Utils.VMCreateResponseParser(response);
 
@@ -62,8 +62,7 @@ public class KTCloudOpenAPI {
 		response = Utils.statusCodeParser(result);
 		String jobID = Utils.IPCreateResponseParser(response);
 
-		//result = RestAPI.request(jobID_URL + jobID, GET, token, "");
-		result = RestAPI.get(jobID_URL + jobID, token);
+		result = RestAPI.request(jobID_URL + jobID, GET, token, "");
 		response = Utils.statusCodeParser(result);
 		String publicIP_ID = Utils.jobIDLookupResponseParser(response);
 

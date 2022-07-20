@@ -58,8 +58,8 @@ public class RestAPI {
 	static String request(String URL, String method, String token, String requestBody) throws Exception {
 		URL url = new URL(URL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		//connection.setConnectTimeout(10000);
-		//connection.setReadTimeout(10000);
+		connection.setConnectTimeout(10000);
+		connection.setReadTimeout(10000);
 		connection.setRequestMethod(method);
 		// connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 		connection.setRequestProperty("Content-Type", "application/json");
@@ -95,25 +95,18 @@ public class RestAPI {
 	}
 
 	public static String get(String URL, String token) throws ClientProtocolException, IOException {
-		CloseableHttpClient client = HttpClients.createDefault();
+		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpGet httpGet = new HttpGet(URL);
 		httpGet.addHeader("User-Agent", "Mozila/5.0");
 		httpGet.setHeader("Accept", "application/json");
-		CloseableHttpResponse httpResponse = client.execute(httpGet);
+		CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
-		if (statusCode == 409) {
-			JSONObject result = new JSONObject();
-			result.put("statusCode", statusCode);
-			result.put("response", "");
-			client.close();
-			return result.toString();
-		}
 		String responseBody = EntityUtils.toString(httpResponse.getEntity(), "UTF-8");
 		System.out.println(statusCode + " " + responseBody);
 		JSONObject result = new JSONObject();
 		result.put("statusCode", statusCode);
 		result.put("response", responseBody);
-		client.close();
+		httpClient.close();
 		return result.toString();
 	}
 
@@ -127,13 +120,6 @@ public class RestAPI {
 		httpPost.setHeader("X-Auth-Token", token);
 		CloseableHttpResponse response = client.execute(httpPost);
 		int statusCode = response.getStatusLine().getStatusCode();
-		if (statusCode == 409) {
-			JSONObject result = new JSONObject();
-			result.put("statusCode", statusCode);
-			result.put("response", "");
-			client.close();
-			return result.toString();
-		}
 		String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
 		System.out.println(statusCode + " " + responseBody);
 		JSONObject result = new JSONObject();
