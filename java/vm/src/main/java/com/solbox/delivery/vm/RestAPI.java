@@ -10,11 +10,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.entity.StringEntity;
@@ -27,7 +29,7 @@ public class RestAPI {
 		//connection.setConnectTimeout(10000);
 		//connection.setReadTimeout(10000);
 		connection.setRequestMethod(method);
-		// connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 		connection.setRequestProperty("Content-Type", "application/json");
 		if (method == "POST" || method == "PUT") {
 			connection.setDoOutput(true);
@@ -61,7 +63,7 @@ public class RestAPI {
 		//connection.setConnectTimeout(10000);
 		//connection.setReadTimeout(10000);
 		connection.setRequestMethod(method);
-		// connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 		connection.setRequestProperty("Content-Type", "application/json");
 		connection.setRequestProperty("X-Auth-Token", token);
 		if (method == "POST" || method == "PUT") {
@@ -94,11 +96,16 @@ public class RestAPI {
 		return result.toString();
 	}
 
-	public static String get(String URL, String token) throws ClientProtocolException, IOException {
-		CloseableHttpClient client = HttpClients.createDefault();
+	public static String get(String URL, String token, int timeout) throws ClientProtocolException, IOException {
+		RequestConfig config = RequestConfig.custom()
+				  .setConnectTimeout(timeout * 1000)
+				  .setConnectionRequestTimeout(timeout * 1000)
+				  .setSocketTimeout(timeout * 1000).build();
+		CloseableHttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
 		HttpGet httpGet = new HttpGet(URL);
-		httpGet.addHeader("User-Agent", "Mozila/5.0");
+		httpGet.addHeader("User-Agent","Mozilla/5.0");
 		httpGet.setHeader("Accept", "application/json");
+		httpGet.setHeader("X-Auth-Token", token);
 		CloseableHttpResponse httpResponse = client.execute(httpGet);
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
 		if (statusCode == 409) {
@@ -117,11 +124,17 @@ public class RestAPI {
 		return result.toString();
 	}
 
-	public static String post(String URL, String token, String requestBody) throws ClientProtocolException, IOException {
-		CloseableHttpClient client = HttpClients.createDefault();
+	//general
+	public static String post(String URL, String token, String requestBody, int timeout) throws ClientProtocolException, IOException {
+		RequestConfig config = RequestConfig.custom()
+				  .setConnectTimeout(timeout * 1000)
+				  .setConnectionRequestTimeout(timeout * 1000)
+				  .setSocketTimeout(timeout * 1000).build();
+		CloseableHttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
 		HttpPost httpPost = new HttpPost(URL);
 		StringEntity entity = new StringEntity(requestBody);
 		httpPost.setEntity(entity);
+		httpPost.addHeader("User-Agent","Mozilla/5.0");
 		httpPost.setHeader("Accept", "application/json");
 		httpPost.setHeader("Content-type", "application/json");
 		httpPost.setHeader("X-Auth-Token", token);
@@ -139,6 +152,39 @@ public class RestAPI {
 		JSONObject result = new JSONObject();
 		result.put("statusCode", statusCode);
 		result.put("response", responseBody);
+		client.close();
+		return result.toString();
+	}
+	
+	//token
+	public static String post(String URL, String requestBody, int timeout) throws ClientProtocolException, IOException {
+		RequestConfig config = RequestConfig.custom()
+				  .setConnectTimeout(timeout * 1000)
+				  .setConnectionRequestTimeout(timeout * 1000)
+				  .setSocketTimeout(timeout * 1000).build();
+		CloseableHttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+		HttpPost httpPost = new HttpPost(URL);
+		StringEntity entity = new StringEntity(requestBody);
+		httpPost.setEntity(entity);
+		httpPost.addHeader("User-Agent","Mozilla/5.0");
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-type", "application/json");
+		CloseableHttpResponse response = client.execute(httpPost);
+		int statusCode = response.getStatusLine().getStatusCode();
+		if (statusCode == 409) {
+			JSONObject result = new JSONObject();
+			result.put("statusCode", statusCode);
+			result.put("response", "");
+			client.close();
+			return result.toString();
+		}
+		String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+		System.out.println(statusCode + " " + responseBody);
+		
+		JSONObject result = new JSONObject();
+		String token = response.getFirstHeader("X-Subject-Token").getValue();
+		result.put("statusCode", statusCode);
+		result.put("response", token);
 		client.close();
 		return result.toString();
 	}

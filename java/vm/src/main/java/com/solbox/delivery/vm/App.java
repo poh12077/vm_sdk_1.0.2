@@ -4,12 +4,14 @@ public class App {
 
 	public static void main(String[] args) {
 		try {
+			
 			/*
 			 * while(true) { KTCloudOpenAPI.createServer("test", "test"); }
-			 */
-			
-			//KTCloudOpenAPI.createServer("test", "test");
-			 KTCloudOpenAPI.init();
+			 */ 
+			//RestAPI.get("http://www.google.com", "", 1);
+			//RestAPI.request("http://www.google.com", "GET", "");
+			KTCloudOpenAPI.createServer("test", "test");
+			 //KTCloudOpenAPI.init();
 			
 		} catch (Exception e) {
 			System.out.println(e);
