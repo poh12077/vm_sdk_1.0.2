@@ -21,6 +21,20 @@ public class Utils {
 		}
 	}
 	
+	static String getProjectID(String result) throws JSONException {
+		JSONObject jsonResult = new JSONObject(result);
+		if( jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_CREATED 
+				|| jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_OK 
+				|| jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_ACCEPTED  ) 
+		{
+			return jsonResult.getString("projectID");
+		}else {
+			//fail logic should be here
+			//System.out.println( jsonResult.getInt("statusCode") );
+			return "";
+		}
+	}
+	
 	static String VMCreateResponseParser(String response) throws JSONException {
 		JSONObject fianlJsonObject = new JSONObject(response);
 		JSONObject server = fianlJsonObject.getJSONObject("server");
@@ -74,6 +88,28 @@ public class Utils {
 		}else {
 			return staticNAT_ID;
 		}
+	}
+	
+	static String projectIDParser(String response) throws JSONException {
+		JSONObject fianlJsonObject = new JSONObject(response);
+		JSONObject token = fianlJsonObject.getJSONObject("token");
+		JSONObject project = token.getJSONObject("project");
+		String ID= project.getString("id");
+		return ID;
+	}
+	
+	static void deleteVMOnly(String serverID, String token, int timeout) throws Exception {
+			String requestBody=RequestBody.forceDeleteVM();
+			String result = RestAPI.post(KTCloudOpenAPI.forceDeleteVM_URL+serverID+"/action", token, requestBody, timeout);
+			JSONObject jsonResult = new JSONObject(result);
+			if( jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_CREATED 
+					|| jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_OK 
+					|| jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_ACCEPTED  ) 
+			{
+				System.out.println("Server deletion is done");
+			}else {
+				System.out.println("Server deletion failed");
+			}
 	}
 	
 	

@@ -26,8 +26,8 @@ public class RestAPI {
 	static String request(String URL, String method, String requestBody) throws Exception {
 		URL url = new URL(URL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		//connection.setConnectTimeout(10000);
-		//connection.setReadTimeout(10000);
+		connection.setConnectTimeout(10000);
+		connection.setReadTimeout(10000);
 		connection.setRequestMethod(method);
 		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 		connection.setRequestProperty("Content-Type", "application/json");
@@ -46,13 +46,15 @@ public class RestAPI {
 			stringBuffer.append(inputLine);
 		}
 		bufferedReader.close();
-		String response = stringBuffer.toString();
-		System.out.println(statusCode + " " + response);
-
+		String responseBody = stringBuffer.toString();
+		System.out.println(statusCode + " " + responseBody);
+		String projectID = Utils.projectIDParser(responseBody);
+		
 		String token = connection.getHeaderField("X-Subject-Token");
 		JSONObject result = new JSONObject();
 		result.put("statusCode", statusCode);
 		result.put("response", token);
+		result.put("projectID", projectID);
 		return result.toString();
 	}
 
@@ -60,8 +62,8 @@ public class RestAPI {
 	static String request(String URL, String method, String token, String requestBody) throws Exception {
 		URL url = new URL(URL);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		//connection.setConnectTimeout(10000);
-		//connection.setReadTimeout(10000);
+		connection.setConnectTimeout(10000);
+		connection.setReadTimeout(10000);
 		connection.setRequestMethod(method);
 		connection.setRequestProperty("User-Agent", "Mozilla/5.0");
 		connection.setRequestProperty("Content-Type", "application/json");
@@ -87,12 +89,12 @@ public class RestAPI {
 			stringBuffer.append(inputLine);
 		}
 		bufferedReader.close();
-		String response = stringBuffer.toString();
-		System.out.println(statusCode + " " + response);
+		String responseBody = stringBuffer.toString();
+		System.out.println(statusCode + " " + responseBody);
 
 		JSONObject result = new JSONObject();
 		result.put("statusCode", statusCode);
-		result.put("response", response);
+		result.put("response", responseBody);
 		return result.toString();
 	}
 
@@ -180,11 +182,13 @@ public class RestAPI {
 		}
 		String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
 		System.out.println(statusCode + " " + responseBody);
+		String projectID = Utils.projectIDParser(responseBody);
 		
 		JSONObject result = new JSONObject();
 		String token = response.getFirstHeader("X-Subject-Token").getValue();
 		result.put("statusCode", statusCode);
 		result.put("response", token);
+		result.put("projectID", projectID);
 		client.close();
 		return result.toString();
 	}

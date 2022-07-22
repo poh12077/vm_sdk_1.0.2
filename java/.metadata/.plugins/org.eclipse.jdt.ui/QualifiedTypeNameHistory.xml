@@ -2,4 +2,6 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="org.apache.http.client.methods.HttpPost"/>
     <fullyQualifiedTypeName name="org.apache.http.client.methods.HttpDelete"/>
+    <fullyQualifiedTypeName name="org.apache.http.client.config.RequestConfig"/>
+    <fullyQualifiedTypeName name="org.apache.http.impl.client.HttpClientBuilder"/>
 </qualifiedTypeNameHistroy>

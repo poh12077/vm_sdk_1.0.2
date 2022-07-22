@@ -7,7 +7,7 @@ public class KTCloudOpenAPI {
 	static final String VMList_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/detail";
 	static final String VMDetail_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
 
-	static final String getVolume_URL = "https://api.ucloudbiz.olleh.com/d1/volume/c3d6ced17b1d45d98af60cbeff8f4bbd/volumes";
+	static final String getVolume_URL = "https://api.ucloudbiz.olleh.com/d1/volume/";
 	static final String connectVMAndVolume_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
 
 	static final String getIP_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
@@ -28,33 +28,34 @@ public class KTCloudOpenAPI {
 	static final String GET = "GET";
 	static final String DELETE = "DELETE";
 	static final String POST = "POST";
+	static final int timeout = 5;
 
 	static void createServer(String serverName, String volumeName) throws Exception {
 
 		String requestBody;
 		String result;
 		String response;
-		String VMImage_complete1="03a6328b-76c8-4d15-8e3f-d5cae5cf1156";
-		String VMImage_nginx="fab16e16-5d53-4e00-892f-bec4b10079bb";
-		
+		String VMImage_complete1 = "03a6328b-76c8-4d15-8e3f-d5cae5cf1156";
+		String VMImage_nginx = "fab16e16-5d53-4e00-892f-bec4b10079bb";
 		// token
-		//result = RestAPI.request(getToken_URL, POST, RequestBody.getToken());
-		result = RestAPI.post(getToken_URL, RequestBody.getToken(), 100);
+		result = RestAPI.request(getToken_URL, POST, RequestBody.getToken());
+		// result = RestAPI.post(getToken_URL, RequestBody.getToken(), 10);
 		String token = Utils.statusCodeParser(result);
+		String projectID = Utils.getProjectID(result);
 
 		// get vm
 		String VMimageID = VMImage_complete1;
 		String specs = "61c68bc1-3a56-4827-9fd1-6a7929362bf6";
 		requestBody = RequestBody.getVM(serverName, VMimageID, specs);
-		//result = RestAPI.request(getVM_URL, POST, token, requestBody);
-		result = RestAPI.post(getVM_URL, token, requestBody,10);
+		// result = RestAPI.request(getVM_URL, POST, token, requestBody);
+		result = RestAPI.post(getVM_URL, token, requestBody, 10);
 		response = Utils.statusCodeParser(result);
 		String VM_ID = Utils.VMCreateResponseParser(response);
 
 		// get volume
 		String volumeImageID = "556aacd2-de16-47fc-b230-3db3a55be50d";
 		requestBody = RequestBody.getVolume(volumeName, volumeImageID);
-		result = RestAPI.request(getVolume_URL, POST, token, requestBody);
+		result = RestAPI.request(getVolume_URL + projectID + "/volumes", POST, token, requestBody);
 		response = Utils.statusCodeParser(result);
 		String volumeID = Utils.volumeCreateResponseParser(response);
 
@@ -63,7 +64,7 @@ public class KTCloudOpenAPI {
 		response = Utils.statusCodeParser(result);
 		String jobID = Utils.IPCreateResponseParser(response);
 
-		//result = RestAPI.request(jobID_URL + jobID, GET, token, "");
+		// result = RestAPI.request(jobID_URL + jobID, GET, token, "");
 		result = RestAPI.get(jobID_URL + jobID, token, 10);
 		response = Utils.statusCodeParser(result);
 		String publicIP_ID = Utils.jobIDLookupResponseParser(response);
@@ -82,7 +83,7 @@ public class KTCloudOpenAPI {
 			count++;
 			System.out.println(count);
 		}
-		//System.out.println(count);
+		// System.out.println(count);
 
 		// look up vm ip
 		result = RestAPI.request(VMDetail_URL + VM_ID, GET, token, "");
@@ -107,8 +108,16 @@ public class KTCloudOpenAPI {
 
 	}
 
-	static void deleteServer() throws Exception {
-		// VM delete logic should be here
+	static void deleteServer(String serverID) throws Exception {
+		String result="";
+		
+		// token
+		result = RestAPI.post(getToken_URL, RequestBody.getToken(), 10);
+		String token = Utils.statusCodeParser(result);
+
+		Utils.deleteVMOnly(serverID, token, timeout);
+		
+		
 	}
 
 	static void init() throws Exception {
