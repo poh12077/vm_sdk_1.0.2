@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="toString"/>
+		<item key="selection" value="id"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="id"/>
+			<item value="c3d6ced17b1d45d98af60cbeff8f4bbd"/>
 			<item value="tostring"/>
 			<item value="&quot;User-Agent&quot;,&quot;Mozilla/5.0&quot;"/>
 			<item value="&quot;User-Agent&quot;, &quot;Mozila/5.0&quot;"/>
@@ -21,8 +23,6 @@
 			<item value="JOB"/>
 			<item value="RestAPI"/>
 			<item value="Utils"/>
-			<item value="connectVMAndVolumeURL"/>
-			<item value="Initialization"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>

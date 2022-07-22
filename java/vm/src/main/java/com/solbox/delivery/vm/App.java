@@ -8,8 +8,8 @@ public class App {
 			/*
 			 * while(true) { KTCloudOpenAPI.createServer("test", "test"); }
 			 */ 
-			//KTCloudOpenAPI.createServer("test", "test");
-			KTCloudOpenAPI.deleteServer("6533a4cd-0be8-42d9-a019-af2236833fbf");
+			ServerInformation serverInformation = KTCloudOpenAPI.createServer("test", "test");
+			KTCloudOpenAPI.deleteServer(serverInformation);
 			// KTCloudOpenAPI.init();
 			
 		} catch (Exception e) {

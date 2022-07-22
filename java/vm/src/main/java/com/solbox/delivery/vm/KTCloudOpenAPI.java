@@ -28,9 +28,9 @@ public class KTCloudOpenAPI {
 	static final String GET = "GET";
 	static final String DELETE = "DELETE";
 	static final String POST = "POST";
-	static final int timeout = 5;
+	static final int timeout = 10; //sec
 
-	static void createServer(String serverName, String volumeName) throws Exception {
+	static ServerInformation createServer(String serverName, String volumeName) throws Exception {
 
 		String requestBody;
 		String result;
@@ -73,8 +73,7 @@ public class KTCloudOpenAPI {
 		int count = 0;
 		while (true) {
 			requestBody = RequestBody.connectVMAndVolume(volumeID);
-			result = RestAPI.request(connectVMAndVolume_URL + VM_ID + "/os-volume_attachments", POST, token,
-					requestBody);
+			result = RestAPI.request(connectVMAndVolume_URL + VM_ID + "/os-volume_attachments", POST, token, requestBody);
 			response = Utils.statusCodeParser(result);
 			if (response.length() > 0) {
 				break;
@@ -97,25 +96,26 @@ public class KTCloudOpenAPI {
 		response = Utils.statusCodeParser(result);
 		String staticNAT_ID = Utils.staticNATSettingResponseParser(response);
 
+		// open firewall
 		requestBody = RequestBody.openFirewall("0", "65535", staticNAT_ID, "6b812762-c6bc-4a6d-affb-c469af1b4342",
 				"172.25.1.1/24", "ALL", "71655962-3e67-42d6-a17d-6ab61a435dfe");
 		result = RestAPI.request(openFirewall_URL, POST, token, requestBody);
 		response = Utils.statusCodeParser(result);
 
 		System.out.println("server creation is done");
-		// result = RestAPI.request(IPList_URL, GET, token);
-		// response = Utils.statusCodeParser(result);
-
+		
+		ServerInformation serverInformation = new ServerInformation(VM_ID, volumeID, publicIP_ID, staticNAT_ID, projectID);
+		return serverInformation;
 	}
 
-	static void deleteServer(String serverID) throws Exception {
+	static void deleteServer(ServerInformation serverInformation) throws Exception {
 		String result="";
 		
 		// token
 		result = RestAPI.post(getToken_URL, RequestBody.getToken(), 10);
 		String token = Utils.statusCodeParser(result);
 
-		Utils.deleteVMOnly(serverID, token, timeout);
+		Utils.deleteVMOnly(serverInformation.VM_ID, token, timeout);
 		
 		
 	}
