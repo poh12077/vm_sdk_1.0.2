@@ -6,16 +6,16 @@ import org.json.JSONObject;
 
 public class Initialization {
 
-	static void deleteAllVM(String list, String token) throws Exception {
+	static void deleteAllVm(String list, String token) throws Exception {
 
 		JSONObject fianlJsonObject = new JSONObject(list);
 		JSONArray servers = fianlJsonObject.getJSONArray("servers");
 
 		for (int i = 0; i < servers.length(); i++) {
-			JSONObject VM = servers.getJSONObject(i);
-			String VM_ID = VM.getString("id");
-			String requestBody=RequestBody.forceDeleteVM();
-			RestAPI.request(KTCloudOpenAPI.forceDeleteVM_URL+VM_ID+"/action" , KTCloudOpenAPI.POST, token, requestBody );
+			JSONObject Vm = servers.getJSONObject(i);
+			String VmId = Vm.getString("id");
+			String requestBody=RequestBody.forceDeleteVm();
+			RestAPI.request(KTCloudOpenAPI.forceDeleteVm_URL+VmId+"/action" , KTCloudOpenAPI.POST, token, requestBody );
 		}
 	}
 	

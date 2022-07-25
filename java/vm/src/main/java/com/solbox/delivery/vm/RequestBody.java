@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class RequestBody {
-	static String getVM(String name, String imageID, String specs) throws JSONException {
+	static String getVm(String name, String imageID, String specs) throws JSONException {
 		JSONObject finalJsonObject = new JSONObject();
 		JSONObject server = new JSONObject();
 		JSONObject networks = new JSONObject();
@@ -77,10 +77,10 @@ public class RequestBody {
 		return finalJsonObject.toString();
 	}
 	
-	static String setStaticNat(String VMPrivateIP, String VMNetworkID, String publicIP_ID) throws JSONException {
+	static String setStaticNat(String VmPrivateIP, String VmNetworkID, String publicIP_ID) throws JSONException {
 		JSONObject finalJsonObject = new JSONObject();
-		finalJsonObject.put("vmguestip", VMPrivateIP);
-		finalJsonObject.put("vmnetworkid", VMNetworkID);
+		finalJsonObject.put("vmguestip", VmPrivateIP);
+		finalJsonObject.put("vmnetworkid", VmNetworkID);
 		finalJsonObject.put("entpublicipid", publicIP_ID);
 		return finalJsonObject.toString();
 	}
@@ -99,7 +99,7 @@ public class RequestBody {
 		return finalJsonObject.toString();
 	}
 
-	static String connectVMAndVolume(String volumeId) throws JSONException {
+	static String connectVmAndVolume(String volumeId) throws JSONException {
 		JSONObject finalJsonObject = new JSONObject();
 		JSONObject volumeAttachment = new JSONObject();
 		volumeAttachment.put("volumeId", volumeId);
@@ -108,7 +108,7 @@ public class RequestBody {
 		return finalJsonObject.toString();
 	}
 	
-	static String forceDeleteVM() throws JSONException {
+	static String forceDeleteVm() throws JSONException {
 		return "{\"forceDelete\": null}";
 	}
 	

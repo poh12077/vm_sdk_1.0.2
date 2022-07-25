@@ -35,14 +35,14 @@ public class Utils {
 		}
 	}
 	
-	static String VMCreateResponseParser(String response) throws JSONException {
+	static String VmCreateResponseParser(String response) throws JSONException {
 		JSONObject fianlJsonObject = new JSONObject(response);
 		JSONObject server = fianlJsonObject.getJSONObject("server");
 		String ID = server.getString("id");
 		return ID;
 	}
 	
-	static String VMDetailResponseParser(String response) throws JSONException {
+	static String VmDetailResponseParser(String response) throws JSONException {
 		JSONObject fianlJsonObject = new JSONObject(response);
 		JSONObject server = fianlJsonObject.getJSONObject("server");
 		JSONObject addresses = server.getJSONObject("addresses");
@@ -98,9 +98,9 @@ public class Utils {
 		return ID;
 	}
 	
-	static void deleteVMOnly(String serverID, String token, int timeout) throws Exception {
-			String requestBody=RequestBody.forceDeleteVM();
-			String result = RestAPI.post(KTCloudOpenAPI.forceDeleteVM_URL+serverID+"/action", token, requestBody, timeout);
+	static void deleteVmOnly(String serverID, String token, int timeout) throws Exception {
+			String requestBody=RequestBody.forceDeleteVm();
+			String result = RestAPI.post(KTCloudOpenAPI.forceDeleteVm_URL+serverID+"/action", token, requestBody, timeout);
 			JSONObject jsonResult = new JSONObject(result);
 			if( jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_CREATED 
 					|| jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_OK 
