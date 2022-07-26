@@ -193,4 +193,34 @@ public class RestAPI {
 		return result.toString();
 	}
 
+	public static String delete(String URL, String token, int timeout) throws ClientProtocolException, IOException {
+		RequestConfig config = RequestConfig.custom()
+				  .setConnectTimeout(timeout * 1000)
+				  .setConnectionRequestTimeout(timeout * 1000)
+				  .setSocketTimeout(timeout * 1000).build();
+		CloseableHttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(config).build();
+		HttpDelete httpDelete = new HttpDelete(URL);
+		httpDelete.addHeader("User-Agent","Mozilla/5.0");
+		httpDelete.setHeader("Accept", "application/json");
+		httpDelete.setHeader("Content-type", "application/json");
+		httpDelete.setHeader("X-Auth-Token", token);
+		CloseableHttpResponse response = client.execute(httpDelete);
+		int statusCode = response.getStatusLine().getStatusCode();
+		if (statusCode == 409) {
+			JSONObject result = new JSONObject();
+			result.put("statusCode", statusCode);
+			result.put("response", "");
+			client.close();
+			return result.toString();
+		}
+		String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
+		System.out.println(statusCode + " " + responseBody);
+		JSONObject result = new JSONObject();
+		result.put("statusCode", statusCode);
+		result.put("response", responseBody);
+		client.close();
+		return result.toString();
+	}
+
+	
 }

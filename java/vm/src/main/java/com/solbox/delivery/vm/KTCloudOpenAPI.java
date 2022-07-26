@@ -9,7 +9,9 @@ public class KTCloudOpenAPI {
 
 	static final String getVolume_URL = "https://api.ucloudbiz.olleh.com/d1/volume/";
 	static final String connectVmAndVolume_URL = "https://api.ucloudbiz.olleh.com/d1/server/servers/";
+	static final String deleteVolume = "https://api.ucloudbiz.olleh.com/d1/volume/";
 
+	
 	static final String getIP_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
 	static final String deleteIP_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress/";
 	static final String IPList_URL = "https://api.ucloudbiz.olleh.com/d1/nc/IpAddress";
@@ -37,6 +39,8 @@ public class KTCloudOpenAPI {
 		String response;
 		String VmImage_complete1 = "03a6328b-76c8-4d15-8e3f-d5cae5cf1156";
 		String VmImage_nginx = "fab16e16-5d53-4e00-892f-bec4b10079bb";
+		
+		System.out.println("Server creation has started");
 		// token
 		result = RestAPI.request(getToken_URL, POST, RequestBody.getToken());
 		// result = RestAPI.post(getToken_URL, RequestBody.getToken(), 10);
@@ -62,14 +66,15 @@ public class KTCloudOpenAPI {
 		// get public ip
 		result = RestAPI.request(getIP_URL, POST, token, "");
 		response = Utils.statusCodeParser(result);
-		String jobID = Utils.IPCreateResponseParser(response);
+		String publicIpjobID = Utils.IPCreateResponseParser(response);
 
 		// result = RestAPI.request(jobID_URL + jobID, GET, token, "");
-		result = RestAPI.get(jobID_URL + jobID, token, 10);
-		response = Utils.statusCodeParser(result);
-		String publicIP_ID = Utils.jobIDLookupResponseParser(response);
+		//result = RestAPI.get(jobID_URL + jobID, token, 10);
+		response = Utils.lookupJobId(publicIpjobID, token, 10);
+		String publicIP_ID = Utils.PublicIPJobIDlookupParser(response);
 
 		// connect vm and volume
+		System.out.print("Server creation is in progress ");
 		int count = 0;
 		while (true) {
 			requestBody = RequestBody.connectVmAndVolume(volumeID);
@@ -80,10 +85,11 @@ public class KTCloudOpenAPI {
 			}
 			Thread.sleep(1000);
 			count++;
-			System.out.println(count);
+			System.out.print(count+" ");
 		}
-		// System.out.println(count);
-
+		 System.out.println("Server creation is done");
+		 System.out.println("Server is connected with disk");
+		 
 		// look up vm ip
 		result = RestAPI.request(VmDetail_URL + VmId, GET, token, "");
 		response = Utils.statusCodeParser(result);
@@ -101,29 +107,25 @@ public class KTCloudOpenAPI {
 				"172.25.1.1/24", "ALL", "71655962-3e67-42d6-a17d-6ab61a435dfe");
 		result = RestAPI.request(openFirewall_URL, POST, token, requestBody);
 		response = Utils.statusCodeParser(result);
-
+		String firewallJobId = Utils.firewallJobIdParser(response);
+		
 		System.out.println("server creation is done");
 		
-		RestAPI.get("https://api.ucloudbiz.olleh.com/d1/server/servers/"+ VmId, token, 10);
-		
-		ServerInformation serverInformation = new ServerInformation(VmId, volumeID, publicIP_ID, staticNAT_ID, projectID);
-		Database.write(serverInformation);
+		ServerInformation serverInformation = new ServerInformation(VmId, volumeID, publicIP_ID, staticNAT_ID, projectID, firewallJobId);
 		return serverInformation;
 		
 	}
 
-	static void deleteServer(String vmId) throws Exception {
-		
-		ServerInformation serverInformation = Database.read(vmId);
-		
+	static void deleteServer(ServerInformation serverInformation) throws Exception {
 		String result="";
+		System.out.println("Server deletion has started");
 		// token
 		result = RestAPI.post(getToken_URL, RequestBody.getToken(), 10);
 		String token = Utils.statusCodeParser(result);
 
 		Utils.deleteVmOnly(serverInformation.getVmId(), token, timeout);
-		
-		
+		Utils.deleteVolume(serverInformation.getVolumeID(), serverInformation.getProjectID(), token, timeout);
+		Utils.closeFirewall(serverInformation.getFirewallJobId(), token, timeout);
 	}
 
 	static void init() throws Exception {
