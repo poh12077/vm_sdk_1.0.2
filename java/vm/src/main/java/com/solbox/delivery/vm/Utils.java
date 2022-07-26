@@ -150,6 +150,32 @@ public class Utils {
 		}
 	}
 
+	static void deleteStaticNat(String staticNatId, String token, int timeout) throws Exception {
+			String result = RestAPI.delete(KTCloudOpenAPI.DeleteStaticNAT_URL+staticNatId, token,	timeout);
+			JSONObject jsonResult = new JSONObject(result);
+			if (jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_CREATED
+					|| jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_OK
+					|| jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_ACCEPTED) {
+				System.out.println("static NAT has been disabled");
+			} else {
+				System.out.println("static NAT deletion has failed");
+			}
+	}
+
+	static void deletePublicIp(String publicIpId, String token, int timeout) throws Exception {
+		String result = RestAPI.delete(KTCloudOpenAPI.deleteIP_URL+publicIpId, token, timeout);
+		JSONObject jsonResult = new JSONObject(result);
+		if (jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_CREATED
+				|| jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_OK
+				|| jsonResult.getInt("statusCode") == HttpURLConnection.HTTP_ACCEPTED) {
+			System.out.println("public IP has been deleted");
+		} else {
+			System.out.println("public IP deletion has failed");
+		}
+}
+
+	
+	
 	static String lookupJobId(String jobId, String token, int timeout) throws Exception {
 		String result = RestAPI.get(KTCloudOpenAPI.jobID_URL+jobId, token, timeout);
 		String response=Utils.statusCodeParser(result);

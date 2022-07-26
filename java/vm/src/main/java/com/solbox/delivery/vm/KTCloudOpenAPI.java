@@ -68,8 +68,7 @@ public class KTCloudOpenAPI {
 		response = Utils.statusCodeParser(result);
 		String publicIpjobID = Utils.IPCreateResponseParser(response);
 
-		// result = RestAPI.request(jobID_URL + jobID, GET, token, "");
-		//result = RestAPI.get(jobID_URL + jobID, token, 10);
+		//get public ip_id
 		response = Utils.lookupJobId(publicIpjobID, token, 10);
 		String publicIP_ID = Utils.PublicIPJobIDlookupParser(response);
 
@@ -126,6 +125,8 @@ public class KTCloudOpenAPI {
 		Utils.deleteVmOnly(serverInformation.getVmId(), token, timeout);
 		Utils.deleteVolume(serverInformation.getVolumeID(), serverInformation.getProjectID(), token, timeout);
 		Utils.closeFirewall(serverInformation.getFirewallJobId(), token, timeout);
+		Utils.deleteStaticNat(serverInformation.getStaticNAT_ID(), token, timeout);
+		Utils.deletePublicIp(serverInformation.getPublicIP_ID(), token, timeout);
 	}
 
 	static void init() throws Exception {
